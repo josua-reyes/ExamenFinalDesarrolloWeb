@@ -15,7 +15,7 @@ namespace WebServicesSOAP
     // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     // [System.Web.Script.Services.ScriptService]
 
-    public class examenFinal : System.Web.Services.WebService
+    public class ExamenFinal : System.Web.Services.WebService
     {
         ExamenFinalBll _examenFinalBll;
 

@@ -117,7 +117,7 @@ namespace CapaDatos
         public ResultadoConsultaDatos ObtenerMusicoPorGenero(int idGenero)
         {
             string consultaSql = $@"
-                    SELECT
+                    SELECT DISTINCT
                       m.nombre AS nombre_del_musico,
                       ge.descripcion AS genero
                     FROM musico m
@@ -164,7 +164,7 @@ namespace CapaDatos
             string consultaSql = $@"
                     SELECT
                       g.nombre AS nombre_del_grupo,
-                      m.nombre AS nombre_del_musico
+                      m.*
                     FROM grupo g
                     LEFT JOIN musicosgrupos mg
                       ON g.idgrupo = mg.idgrupo
