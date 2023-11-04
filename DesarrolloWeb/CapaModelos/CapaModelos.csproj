@@ -43,14 +43,7 @@
   <ItemGroup>
     <Compile Include="DTO\CamposGenericosRespuesta.cs" />
     <Compile Include="DTO\AgregarMusicoAGrupoRespuesta.cs" />
-    <Compile Include="DTO\GuardarFacturaVentaSolicitud.cs" />
-    <Compile Include="Modelos\Categoria.cs" />
-    <Compile Include="Modelos\Cliente.cs" />
-    <Compile Include="Modelos\Factura.cs" />
-    <Compile Include="Modelos\Producto.cs" />
-    <Compile Include="Modelos\Proveedor.cs" />
     <Compile Include="DTO\ResultadoConsultaDatos.cs" />
-    <Compile Include="Modelos\Venta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
