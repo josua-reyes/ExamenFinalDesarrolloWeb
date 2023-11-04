@@ -55,6 +55,7 @@
 
 **Todos los objetos de base de datos y permisos están asociados al esquema y usuario  EXAMEN\_FINAL\_DESA\_WEB*.***
 
+```sql
 --DROP USER EXAMEN\_FINAL\_DESA\_WEB CASCADE;
 
 CREATE USER EXAMEN\_FINAL\_DESA\_WEB IDENTIFIED BY "P@ssw0rd" ACCOUNT UNLOCK;
@@ -62,10 +63,11 @@ CREATE USER EXAMEN\_FINAL\_DESA\_WEB IDENTIFIED BY "P@ssw0rd" ACCOUNT UNLOCK;
 GRANT RESOURCE, CONNECT TO EXAMEN\_FINAL\_DESA\_WEB;
 
 GRANT UNLIMITED TABLESPACE TO EXAMEN\_FINAL\_DESA\_WEB;
-
+```
 
 **02\_CREACION\_TABLAS**
 
+```sql
 ALTER SESSION SET CURRENT\_SCHEMA = EXAMEN\_FINAL\_DESA\_WEB;
 
 -- Crear secuencias para las llaves primarias
@@ -80,9 +82,9 @@ CREATE SEQUENCE seq\_idmusico START WITH 1 INCREMENT BY 1;
 
 CREATE TABLE genero (
 
-`  `idgenero INT DEFAULT seq\_idgenero.NEXTVAL PRIMARY KEY,
+    idgenero INT DEFAULT seq\_idgenero.NEXTVAL PRIMARY KEY,
 
-`  `descripcion VARCHAR(45)
+    descripcion VARCHAR(45)
 
 );
 
@@ -90,13 +92,13 @@ CREATE TABLE genero (
 
 CREATE TABLE grupo (
 
-`  `idgrupo INT DEFAULT seq\_idgrupo.NEXTVAL PRIMARY KEY,
+    idgrupo INT DEFAULT seq\_idgrupo.NEXTVAL PRIMARY KEY,
 
-`  `nombre VARCHAR(45),
+    nombre VARCHAR(45),
 
-`  `formacion DATE,
+    formacion DATE,
 
-`  `desintegracion DATE
+    desintegracion DATE
 
 );
 
@@ -104,17 +106,17 @@ CREATE TABLE grupo (
 
 CREATE TABLE musico (
 
-`  `idmusico INT DEFAULT seq\_idmusico.NEXTVAL PRIMARY KEY,
+    idmusico INT DEFAULT seq\_idmusico.NEXTVAL PRIMARY KEY,
 
-`  `nombre VARCHAR(45),
+    nombre VARCHAR(45),
 
-`  `instrumento VARCHAR(45),
+    instrumento VARCHAR(45),
 
-`  `lugarnacimiento VARCHAR(45),
+    lugarnacimiento VARCHAR(45),
 
-`  `fechanacimiento DATE,
+    fechanacimiento DATE,
 
-`  `fechamuerte DATE
+    fechamuerte DATE
 
 );
 
@@ -122,9 +124,9 @@ CREATE TABLE musico (
 
 CREATE TABLE generosgrupos (
 
-`  `idgrupo INT,
+    idgrupo INT,
 
-`  `idgenero INT
+    idgenero INT
 
 );
 
@@ -132,15 +134,15 @@ CREATE TABLE generosgrupos (
 
 CREATE TABLE musicosgrupos (
 
-`  `idgrupo INT,
+    idgrupo INT,
 
-`  `idmusico INT,
+    idmusico INT,
 
-`  `instrumento VARCHAR(45),
+    instrumento VARCHAR(45),
 
-`  `fechainicio DATE,
+    fechainicio DATE,
 
-`  `fechafin DATE
+    fechafin DATE
 
 );
 
@@ -161,11 +163,12 @@ ADD CONSTRAINT fk\_musicosgrupos\_grupo FOREIGN KEY (idgrupo) REFERENCES grupo(i
 ALTER TABLE musicosgrupos
 
 ADD CONSTRAINT fk\_musicosgrupos\_musico FOREIGN KEY (idmusico) REFERENCES musico(idmusico);
-
+```
 
 
 **03\_DATOS\_MUESTRA**
 
+```sql
 -- Insertar registros de ejemplo en la tabla 'genero'
 
 INSERT INTO genero (descripcion) VALUES ('Rock');
@@ -213,24 +216,26 @@ INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin
 INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (3, 3, 'Guitarra', TO\_DATE('1968-09-01', 'YYYY-MM-DD'), TO\_DATE('1980-12-04', 'YYYY-MM-DD'));
 
 COMMIT;
+```
 
 **04\_PAQUETE\_EXAMEN\_FINAL**
 
+```sql
 CREATE OR REPLACE PACKAGE ExamenFinal AS
 
-`  `PROCEDURE AgregarMusicoAGrupo(
+    PROCEDURE AgregarMusicoAGrupo(
 
-`    `p\_IdMusico IN NUMBER,
+        p\_IdMusico IN NUMBER,
 
-`    `p\_IdGrupo IN NUMBER,
+        p\_IdGrupo IN NUMBER,
 
-`    `p\_Instrumento IN VARCHAR2,
+        p\_Instrumento IN VARCHAR2,
 
-`    `p\_Estado OUT VARCHAR2,
+        p\_Estado OUT VARCHAR2,
 
-`    `p\_DescripcionError OUT VARCHAR2
+        p\_DescripcionError OUT VARCHAR2
 
-`  `);
+    );
 
 END ExamenFinal;
 
@@ -238,71 +243,71 @@ END ExamenFinal;
 
 CREATE OR REPLACE PACKAGE BODY ExamenFinal AS
 
-`  `PROCEDURE AgregarMusicoAGrupo(
+    PROCEDURE AgregarMusicoAGrupo(
 
-`    `p\_IdMusico IN NUMBER,
+        p\_IdMusico IN NUMBER,
 
-`    `p\_IdGrupo IN NUMBER,
+        p\_IdGrupo IN NUMBER,
 
-`    `p\_Instrumento IN VARCHAR2,    
+        p\_Instrumento IN VARCHAR2,    
 
-`    `p\_Estado OUT VARCHAR2,
+        p\_Estado OUT VARCHAR2,
 
-`    `p\_DescripcionError OUT VARCHAR2
+        p\_DescripcionError OUT VARCHAR2
 
-`  `) AS
+    ) AS
 
-`    `v\_Contador NUMBER;
+        v\_Contador NUMBER;
 
-`  `BEGIN
+    BEGIN
 
-`    `-- Inicializa los parámetros de salida
+        -- Inicializa los parámetros de salida
 
-`    `p\_Estado := 'EXITO';
+        p\_Estado := 'EXITO';
 
-`    `p\_DescripcionError := NULL;
+        p\_DescripcionError := NULL;
 
 
 
-`    `SELECT COUNT(\*)
+        SELECT COUNT(\*)
 
-`    `INTO v\_Contador
+        INTO v\_Contador
 
-`    `FROM musicosgrupos
+        FROM musicosgrupos
 
-`    `WHERE idmusico = p\_IdMusico AND idgrupo = p\_IdGrupo;
+        WHERE idmusico = p\_IdMusico AND idgrupo = p\_IdGrupo;
 
-`  `IF v\_Contador = 0 THEN
+    IF v\_Contador = 0 THEN
 
-`    `-- El músico no es miembro del grupo, así que lo agregamos
+        -- El músico no es miembro del grupo, así que lo agregamos
 
-`    `INSERT INTO musicosgrupos (idmusico, idgrupo,instrumento,fechainicio)
+        INSERT INTO musicosgrupos (idmusico, idgrupo,instrumento,fechainicio)
 
-`    `VALUES (p\_idmusico, p\_idgrupo, p\_Instrumento,TRUNC(SYSDATE));
+        VALUES (p\_idmusico, p\_idgrupo, p\_Instrumento,TRUNC(SYSDATE));
 
-`  `ELSE
+    ELSE
 
-`    `p\_Estado := 'ERROR';
+        p\_Estado := 'ERROR';
 
-`    `p\_DescripcionError := 'El músico ya es miembro de este grupo.';
+        p\_DescripcionError := 'El músico ya es miembro de este grupo.';
 
-`  `END IF;
+    END IF;
 
-`  `EXCEPTION
+    EXCEPTION
 
-`    `WHEN OTHERS THEN
+        WHEN OTHERS THEN
 
-`      `p\_Estado := 'ERROR';
+        p\_Estado := 'ERROR';
 
-`      `p\_DescripcionError := 'BD: ' || SQLERRM;
+        p\_DescripcionError := 'BD: ' || SQLERRM;
 
-`  `END AgregarMusicoAGrupo;
+    END AgregarMusicoAGrupo;
 
 END ExamenFinal;
 
 /
 
-
+```
 
 **Solución .Net (WS SOAP)**
 
