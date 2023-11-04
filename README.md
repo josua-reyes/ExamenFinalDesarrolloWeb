@@ -53,36 +53,36 @@
 
 **Scripts Base de Datos** 
 
-**Todos los objetos de base de datos y permisos están asociados al esquema y usuario  EXAMEN\_FINAL\_DESA\_WEB*.***
+**Todos los objetos de base de datos y permisos están asociados al esquema y usuario  EXAMEN_FINAL_DESA_WEB*.***
 
 ```sql
---DROP USER EXAMEN\_FINAL\_DESA\_WEB CASCADE;
+--DROP USER EXAMEN_FINAL_DESA_WEB CASCADE;
 
-CREATE USER EXAMEN\_FINAL\_DESA\_WEB IDENTIFIED BY "P@ssw0rd" ACCOUNT UNLOCK;
+CREATE USER EXAMEN_FINAL_DESA_WEB IDENTIFIED BY "P@ssw0rd" ACCOUNT UNLOCK;
 
-GRANT RESOURCE, CONNECT TO EXAMEN\_FINAL\_DESA\_WEB;
+GRANT RESOURCE, CONNECT TO EXAMEN_FINAL_DESA_WEB;
 
-GRANT UNLIMITED TABLESPACE TO EXAMEN\_FINAL\_DESA\_WEB;
+GRANT UNLIMITED TABLESPACE TO EXAMEN_FINAL_DESA_WEB;
 ```
 
-**02\_CREACION\_TABLAS**
+**02_CREACION_TABLAS**
 
 ```sql
-ALTER SESSION SET CURRENT\_SCHEMA = EXAMEN\_FINAL\_DESA\_WEB;
+ALTER SESSION SET CURRENT_SCHEMA = EXAMEN_FINAL_DESA_WEB;
 
 -- Crear secuencias para las llaves primarias
 
-CREATE SEQUENCE seq\_idgenero START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_idgenero START WITH 1 INCREMENT BY 1;
 
-CREATE SEQUENCE seq\_idgrupo START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_idgrupo START WITH 1 INCREMENT BY 1;
 
-CREATE SEQUENCE seq\_idmusico START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_idmusico START WITH 1 INCREMENT BY 1;
 
 -- Crear la tabla 'genero'
 
 CREATE TABLE genero (
 
-    idgenero INT DEFAULT seq\_idgenero.NEXTVAL PRIMARY KEY,
+    idgenero INT DEFAULT seq_idgenero.NEXTVAL PRIMARY KEY,
 
     descripcion VARCHAR(45)
 
@@ -92,7 +92,7 @@ CREATE TABLE genero (
 
 CREATE TABLE grupo (
 
-    idgrupo INT DEFAULT seq\_idgrupo.NEXTVAL PRIMARY KEY,
+    idgrupo INT DEFAULT seq_idgrupo.NEXTVAL PRIMARY KEY,
 
     nombre VARCHAR(45),
 
@@ -106,7 +106,7 @@ CREATE TABLE grupo (
 
 CREATE TABLE musico (
 
-    idmusico INT DEFAULT seq\_idmusico.NEXTVAL PRIMARY KEY,
+    idmusico INT DEFAULT seq_idmusico.NEXTVAL PRIMARY KEY,
 
     nombre VARCHAR(45),
 
@@ -150,23 +150,23 @@ CREATE TABLE musicosgrupos (
 
 ALTER TABLE generosgrupos
 
-ADD CONSTRAINT fk\_generosgrupos\_grupo FOREIGN KEY (idgrupo) REFERENCES grupo(idgrupo);
+ADD CONSTRAINT fk_generosgrupos_grupo FOREIGN KEY (idgrupo) REFERENCES grupo(idgrupo);
 
 ALTER TABLE generosgrupos
 
-ADD CONSTRAINT fk\_generosgrupos\_genero FOREIGN KEY (idgenero) REFERENCES genero(idgenero);
+ADD CONSTRAINT fk_generosgrupos_genero FOREIGN KEY (idgenero) REFERENCES genero(idgenero);
 
 ALTER TABLE musicosgrupos
 
-ADD CONSTRAINT fk\_musicosgrupos\_grupo FOREIGN KEY (idgrupo) REFERENCES grupo(idgrupo);
+ADD CONSTRAINT fk_musicosgrupos_grupo FOREIGN KEY (idgrupo) REFERENCES grupo(idgrupo);
 
 ALTER TABLE musicosgrupos
 
-ADD CONSTRAINT fk\_musicosgrupos\_musico FOREIGN KEY (idmusico) REFERENCES musico(idmusico);
+ADD CONSTRAINT fk_musicosgrupos_musico FOREIGN KEY (idmusico) REFERENCES musico(idmusico);
 ```
 
 
-**03\_DATOS\_MUESTRA**
+**03_DATOS_MUESTRA**
 
 ```sql
 -- Insertar registros de ejemplo en la tabla 'genero'
@@ -181,19 +181,19 @@ INSERT INTO genero (descripcion) VALUES ('Hip-Hop');
 
 -- Insertar registros de ejemplo en la tabla 'grupo'
 
-INSERT INTO grupo (nombre, formacion, desintegracion) VALUES ('The Beatles', TO\_DATE('1960-01-01', 'YYYY-MM-DD'), TO\_DATE('1970-04-10', 'YYYY-MM-DD'));
+INSERT INTO grupo (nombre, formacion, desintegracion) VALUES ('The Beatles', TO_DATE('1960-01-01', 'YYYY-MM-DD'), TO_DATE('1970-04-10', 'YYYY-MM-DD'));
 
-INSERT INTO grupo (nombre, formacion, desintegracion) VALUES ('Queen', TO\_DATE('1970-06-27', 'YYYY-MM-DD'), NULL);
+INSERT INTO grupo (nombre, formacion, desintegracion) VALUES ('Queen', TO_DATE('1970-06-27', 'YYYY-MM-DD'), NULL);
 
-INSERT INTO grupo (nombre, formacion, desintegracion) VALUES ('Led Zeppelin', TO\_DATE('1968-09-01', 'YYYY-MM-DD'), TO\_DATE('1980-12-04', 'YYYY-MM-DD'));
+INSERT INTO grupo (nombre, formacion, desintegracion) VALUES ('Led Zeppelin', TO_DATE('1968-09-01', 'YYYY-MM-DD'), TO_DATE('1980-12-04', 'YYYY-MM-DD'));
 
 -- Insertar registros de ejemplo en la tabla 'musico'
 
-INSERT INTO musico (nombre, instrumento, lugarnacimiento, fechanacimiento, fechamuerte) VALUES ('John Lennon', 'Guitarra', 'Liverpool', TO\_DATE('1940-10-09', 'YYYY-MM-DD'), TO\_DATE('1980-12-08', 'YYYY-MM-DD'));
+INSERT INTO musico (nombre, instrumento, lugarnacimiento, fechanacimiento, fechamuerte) VALUES ('John Lennon', 'Guitarra', 'Liverpool', TO_DATE('1940-10-09', 'YYYY-MM-DD'), TO_DATE('1980-12-08', 'YYYY-MM-DD'));
 
-INSERT INTO musico (nombre, instrumento, lugarnacimiento, fechanacimiento, fechamuerte) VALUES ('Freddie Mercury', 'Voz', 'Zanzíbar', TO\_DATE('1946-09-05', 'YYYY-MM-DD'), TO\_DATE('1991-11-24', 'YYYY-MM-DD'));
+INSERT INTO musico (nombre, instrumento, lugarnacimiento, fechanacimiento, fechamuerte) VALUES ('Freddie Mercury', 'Voz', 'Zanzíbar', TO_DATE('1946-09-05', 'YYYY-MM-DD'), TO_DATE('1991-11-24', 'YYYY-MM-DD'));
 
-INSERT INTO musico (nombre, instrumento, lugarnacimiento, fechanacimiento, fechamuerte) VALUES ('Jimmy Page', 'Guitarra', 'Heston', TO\_DATE('1944-01-09', 'YYYY-MM-DD'), NULL);
+INSERT INTO musico (nombre, instrumento, lugarnacimiento, fechanacimiento, fechamuerte) VALUES ('Jimmy Page', 'Guitarra', 'Heston', TO_DATE('1944-01-09', 'YYYY-MM-DD'), NULL);
 
 -- Insertar registros de ejemplo en la tabla 'generosgrupos'
 
@@ -209,31 +209,31 @@ INSERT INTO generosgrupos (idgrupo, idgenero) VALUES (3, 3);
 
 -- Insertar registros de ejemplo en la tabla 'musicosgrupos'
 
-INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (1, 1, 'Guitarra', TO\_DATE('1960-01-01', 'YYYY-MM-DD'), TO\_DATE('1970-04-10', 'YYYY-MM-DD'));
+INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (1, 1, 'Guitarra', TO_DATE('1960-01-01', 'YYYY-MM-DD'), TO_DATE('1970-04-10', 'YYYY-MM-DD'));
 
-INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (2, 2, 'Voz', TO\_DATE('1970-06-27', 'YYYY-MM-DD'), NULL);
+INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (2, 2, 'Voz', TO_DATE('1970-06-27', 'YYYY-MM-DD'), NULL);
 
-INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (3, 3, 'Guitarra', TO\_DATE('1968-09-01', 'YYYY-MM-DD'), TO\_DATE('1980-12-04', 'YYYY-MM-DD'));
+INSERT INTO musicosgrupos (idgrupo, idmusico, instrumento, fechainicio, fechafin) VALUES (3, 3, 'Guitarra', TO_DATE('1968-09-01', 'YYYY-MM-DD'), TO_DATE('1980-12-04', 'YYYY-MM-DD'));
 
 COMMIT;
 ```
 
-**04\_PAQUETE\_EXAMEN\_FINAL**
+**04_PAQUETE_EXAMEN_FINAL**
 
 ```sql
 CREATE OR REPLACE PACKAGE ExamenFinal AS
 
     PROCEDURE AgregarMusicoAGrupo(
 
-        p\_IdMusico IN NUMBER,
+        p_IdMusico IN NUMBER,
 
-        p\_IdGrupo IN NUMBER,
+        p_IdGrupo IN NUMBER,
 
-        p\_Instrumento IN VARCHAR2,
+        p_Instrumento IN VARCHAR2,
 
-        p\_Estado OUT VARCHAR2,
+        p_Estado OUT VARCHAR2,
 
-        p\_DescripcionError OUT VARCHAR2
+        p_DescripcionError OUT VARCHAR2
 
     );
 
@@ -245,51 +245,51 @@ CREATE OR REPLACE PACKAGE BODY ExamenFinal AS
 
     PROCEDURE AgregarMusicoAGrupo(
 
-        p\_IdMusico IN NUMBER,
+        p_IdMusico IN NUMBER,
 
-        p\_IdGrupo IN NUMBER,
+        p_IdGrupo IN NUMBER,
 
-        p\_Instrumento IN VARCHAR2,    
+        p_Instrumento IN VARCHAR2,    
 
-        p\_Estado OUT VARCHAR2,
+        p_Estado OUT VARCHAR2,
 
-        p\_DescripcionError OUT VARCHAR2
+        p_DescripcionError OUT VARCHAR2
 
     ) AS
 
-        v\_Contador NUMBER;
+        v_Contador NUMBER;
 
     BEGIN
 
         -- Inicializa los parámetros de salida
 
-        p\_Estado := 'EXITO';
+        p_Estado := 'EXITO';
 
-        p\_DescripcionError := NULL;
+        p_DescripcionError := NULL;
 
 
 
         SELECT COUNT(\*)
 
-        INTO v\_Contador
+        INTO v_Contador
 
         FROM musicosgrupos
 
-        WHERE idmusico = p\_IdMusico AND idgrupo = p\_IdGrupo;
+        WHERE idmusico = p_IdMusico AND idgrupo = p_IdGrupo;
 
-    IF v\_Contador = 0 THEN
+    IF v_Contador = 0 THEN
 
         -- El músico no es miembro del grupo, así que lo agregamos
 
         INSERT INTO musicosgrupos (idmusico, idgrupo,instrumento,fechainicio)
 
-        VALUES (p\_idmusico, p\_idgrupo, p\_Instrumento,TRUNC(SYSDATE));
+        VALUES (p_idmusico, p_idgrupo, p_Instrumento,TRUNC(SYSDATE));
 
     ELSE
 
-        p\_Estado := 'ERROR';
+        p_Estado := 'ERROR';
 
-        p\_DescripcionError := 'El músico ya es miembro de este grupo.';
+        p_DescripcionError := 'El músico ya es miembro de este grupo.';
 
     END IF;
 
@@ -297,9 +297,9 @@ CREATE OR REPLACE PACKAGE BODY ExamenFinal AS
 
         WHEN OTHERS THEN
 
-        p\_Estado := 'ERROR';
+        p_Estado := 'ERROR';
 
-        p\_DescripcionError := 'BD: ' || SQLERRM;
+        p_DescripcionError := 'BD: ' || SQLERRM;
 
     END AgregarMusicoAGrupo;
 
