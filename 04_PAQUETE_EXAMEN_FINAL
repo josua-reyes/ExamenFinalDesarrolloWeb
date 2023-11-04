@@ -2,6 +2,7 @@ CREATE OR REPLACE PACKAGE ExamenFinal AS
   PROCEDURE AgregarMusicoAGrupo(
     p_IdMusico IN NUMBER,
     p_IdGrupo IN NUMBER,
+    p_Instrumento IN VARCHAR2,
     p_Estado OUT VARCHAR2,
     p_DescripcionError OUT VARCHAR2
   );
@@ -12,6 +13,7 @@ CREATE OR REPLACE PACKAGE BODY ExamenFinal AS
   PROCEDURE AgregarMusicoAGrupo(
     p_IdMusico IN NUMBER,
     p_IdGrupo IN NUMBER,
+    p_Instrumento IN VARCHAR2,    
     p_Estado OUT VARCHAR2,
     p_DescripcionError OUT VARCHAR2
   ) AS
@@ -28,8 +30,8 @@ CREATE OR REPLACE PACKAGE BODY ExamenFinal AS
 
   IF v_Contador = 0 THEN
     -- El músico no es miembro del grupo, así que lo agregamos
-    INSERT INTO musicosgrupos (idmusico, idgrupo)
-    VALUES (p_idmusico, p_idgrupo);
+    INSERT INTO musicosgrupos (idmusico, idgrupo,instrumento,fechainicio)
+    VALUES (p_idmusico, p_idgrupo, p_Instrumento,TRUNC(SYSDATE));
   ELSE
     p_Estado := 'ERROR';
     p_DescripcionError := 'El músico ya es miembro de este grupo.';

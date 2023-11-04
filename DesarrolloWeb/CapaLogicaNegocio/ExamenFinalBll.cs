@@ -13,9 +13,9 @@ namespace CapaLogicaNegocio
 
         }
 
-        public AgregarMusicoAGrupoRespuesta AgregarMusicoAGrupo(int idMusico, int idGrupo)
+        public AgregarMusicoAGrupoRespuesta AgregarMusicoAGrupo(int idMusico, int idGrupo, string instrumento)
         {
-            return _examenFinalDal.AgregarMusicoAGrupo(idMusico, idGrupo);
+            return _examenFinalDal.AgregarMusicoAGrupo(idMusico, idGrupo, instrumento);
         }
 
         public ResultadoConsultaDatos ObtenerMusicoPorGenero(int idGenero)

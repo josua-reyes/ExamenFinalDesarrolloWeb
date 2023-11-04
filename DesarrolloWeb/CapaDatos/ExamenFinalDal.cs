@@ -58,7 +58,7 @@ namespace CapaDatos
             return resultadoConsultaDatos;
         }
 
-        public AgregarMusicoAGrupoRespuesta AgregarMusicoAGrupo(int idMusico, int idGrupo)
+        public AgregarMusicoAGrupoRespuesta AgregarMusicoAGrupo(int idMusico, int idGrupo, string instrumento)
         {
             AgregarMusicoAGrupoRespuesta agregarMusicoAGrupoRespuesta = new AgregarMusicoAGrupoRespuesta();
 
@@ -78,6 +78,7 @@ namespace CapaDatos
 
                             _Command.Parameters.Add("p_IdMusico", OracleDbType.Int32).Value = idMusico;
                             _Command.Parameters.Add("p_IdGrupo", OracleDbType.Int32).Value = idGrupo;
+                            _Command.Parameters.Add("p_Instrumento", OracleDbType.Varchar2, 50).Value = instrumento;
                             _Command.Parameters.Add("p_Estado", OracleDbType.Varchar2, 50).Direction = ParameterDirection.Output;
                             _Command.Parameters.Add("p_DescripcionError", OracleDbType.Varchar2, 2000).Direction = ParameterDirection.Output;
 

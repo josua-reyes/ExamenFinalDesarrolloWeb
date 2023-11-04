@@ -20,10 +20,10 @@ namespace WebServicesSOAP
         ExamenFinalBll _examenFinalBll;
 
         [WebMethod]
-        public AgregarMusicoAGrupoRespuesta AgregarMusicoAGrupo(int idMusico, int idGrupo)
+        public AgregarMusicoAGrupoRespuesta AgregarMusicoAGrupo(int idMusico, int idGrupo, string instrumento)
         {
             _examenFinalBll = new ExamenFinalBll();
-            return _examenFinalBll.AgregarMusicoAGrupo(idMusico, idGrupo);
+            return _examenFinalBll.AgregarMusicoAGrupo(idMusico, idGrupo, instrumento);
         }
 
         [WebMethod]
